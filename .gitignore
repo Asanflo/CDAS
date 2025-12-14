@@ -5,3 +5,15 @@ db.sqlite3
 db.sqlite3-journal
 
 cenv/
+
+#nodes 
+nodes_modules/
+npm-deug.log*
+yarn-error.log*
+
+#environnements
+.env
+
+#build
+dist/
+build/
