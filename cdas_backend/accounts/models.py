@@ -22,14 +22,21 @@ class UtilisateurManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("is_superuser doit être True pour un superuser")
 
+        # Assure-toi qu'il y a un rôle par défaut (ex : Admin)
+        if "role" not in extra_fields:
+            from .models import Role
+            role_admin, _ = Role.objects.get_or_create(libelle="Admin", defaults={"description": "Super admin"})
+            extra_fields["role"] = role_admin
+
         return self.create_user(email, password, **extra_fields)
+
 
 class Utilisateur(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100, blank=True, null=True)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
-    telephone = models.CharField(max_length=100)
+    telephone = models.CharField(max_length=100, blank=True, null=True)
     role = models.ForeignKey("Role", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -52,10 +59,10 @@ class Role(models.Model):
 
     id = models.AutoField(primary_key=True)
     libelle = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    permissions = models.ManyToManyField("Permission", related_name="roles", blank=True)
+    permissions = models.ManyToManyField("Permission", related_name="roles", blank=True, null=True)
 
     def __str__(self):
         return self.libelle
@@ -67,7 +74,7 @@ class Permission(models.Model):
 
     id = models.AutoField(primary_key=True)
     codename = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):

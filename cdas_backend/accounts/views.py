@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
 
 from .models import Utilisateur
 from .serializers import UtilisateurSerializer, UtilisateurRegisterSerializer
@@ -50,3 +52,10 @@ class UtilisateurViewSet(viewsets.ModelViewSet):
         """
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+
+
+class GoogleLogin(SocialLoginView):
+    """
+    Authentification via google
+    """
+    adapter_class = GoogleOAuth2Adapter

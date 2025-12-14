@@ -104,6 +104,8 @@ REST_FRAMEWORK = {
 
 SITE_ID = 1
 
+LOGIN_REDIRECT_URL = '/api/v1/auth/google/token/'
+
 # Google OAuth
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
