@@ -24,8 +24,7 @@ class UtilisateurManager(BaseUserManager):
 
         # Assure-toi qu'il y a un rôle par défaut (ex : Admin)
         if "role" not in extra_fields:
-            from .models import Role
-            role_admin, _ = Role.objects.get_or_create(libelle="Admin", defaults={"description": "Super admin"})
+            role_admin = Role.objects.get_or_create(libelle="Admin", defaults={"description": "Super admin"})
             extra_fields["role"] = role_admin
 
         return self.create_user(email, password, **extra_fields)
@@ -36,7 +35,7 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     nom = models.CharField(max_length=100, blank=True, null=True)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
-    telephone = models.CharField(max_length=100, blank=True, null=True)
+    telephone = models.CharField(max_length=15, blank=True, null=True)
     role = models.ForeignKey("Role", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

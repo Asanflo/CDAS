@@ -45,12 +45,22 @@ class Etudiant(models.Model):
         verbose_name_plural = 'Etudiants'
 
     id = models.AutoField(primary_key=True)
+    procedure = models.OneToOneField(
+        Procedure,
+        on_delete=models.CASCADE,
+        related_name="etudiant"
+    )
     matricule = models.CharField(max_length=100)
     nom = models.CharField(max_length=100, blank=True, null=True)
     prenom = models.CharField(max_length=100, blank=True, null=True)
     filiere = models.CharField(max_length=100, blank=True, null=True)
     ecole = models.CharField(max_length=100, blank=True, null=True)
-    moyenne_generale = models.DecimalField(max_digits=2, decimal_places=2, blank=True, null=True)
+    moyenne_generale = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
 
 class ReponseProcedure(models.Model):
     class Meta:
@@ -61,3 +71,34 @@ class ReponseProcedure(models.Model):
     titre = models.CharField(max_length=100)
     contenu = models.TextField(blank=True, null=True)
     procedure_liee = models.ForeignKey(Procedure, on_delete=models.CASCADE)
+    genere_le = models.DateTimeField(auto_now_add=True)
+    modifie_le = models.DateTimeField(auto_now=True)
+
+
+class Paiement(models.Model):
+    STATUT_CHOICES = [
+        ("EN_ATTENTE", "En attente"),
+        ("REUSSI", "Réussi"),
+        ("ECHOUE", "Échoué"),
+    ]
+
+    class Meta:
+        verbose_name = 'Paiement'
+        verbose_name_plural = 'Paiements'
+
+    id = models.AutoField(primary_key=True)
+    telephone_paiement = models.CharField(max_length=15, help_text="Numéro Mobile Money utilisé pour le paiement")
+    montant = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    motif = models.CharField(max_length=100, blank=True, null=True)
+    initie_le = models.DateTimeField(auto_now_add=True)
+    procedure = models.OneToOneField(Procedure, on_delete=models.CASCADE, related_name="paiement")
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default="EN_ATTENTE")
+    reference_transaction = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f"Paiement {self.id},{self.telephone_paiement}"
+
+    @property
+    def is_paiement_valide(self):
+        return self.statut == "REUSSI"
+
