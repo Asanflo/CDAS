@@ -24,6 +24,24 @@ const PersonalInfosStep = () => {
                 {/* Nom */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
+                        Matricule
+                    </label>
+                    <input
+                        type="text"
+                        name="matricule"
+                        value={userData.matricule || ""}
+                        onChange={handleChange}
+                        placeholder="Ex : 24G093454"
+                        className="w-full rounded-lg border border-gray-300 bg-white p-3
+                        text-gray-700 shadow-sm
+                        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
+                        transition-all duration-200"
+                    />
+                </div>
+
+                {/* Nom */}
+                <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold text-gray-700">
                         Nom
                     </label>
                     <input
@@ -57,17 +75,17 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Email */}
+                {/* Filiere */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Adresse email
+                        Filière
                     </label>
                     <input
-                        type="email"
-                        name="email"
-                        value={userData.email || ""}
+                        type="text"
+                        name="filiere"
+                        value={userData.filiere || ""}
                         onChange={handleChange}
-                        placeholder="exemple@email.com"
+                        placeholder="Ex: Genie informatique"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
@@ -75,17 +93,17 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Téléphone */}
+                {/* Ecole */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Téléphone
+                        Ecole
                     </label>
                     <input
-                        type="tel"
-                        name="phone"
-                        value={userData.phone || ""}
+                        type="text"
+                        name="ecole"
+                        value={userData.ecole || ""}
                         onChange={handleChange}
-                        placeholder="+237 6XX XXX XXX"
+                        placeholder="Ex: ENSPD"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
@@ -93,7 +111,7 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Sexe */}
+                {/* Sexe
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
                         Sexe
@@ -111,18 +129,19 @@ const PersonalInfosStep = () => {
                         <option value="M">Masculin</option>
                         <option value="F">Féminin</option>
                     </select>
-                </div>
+                </div> */}
 
-                {/* Date de naissance */}
+                {/* Moyenne */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Date de naissance
+                        Moyenne Générale
                     </label>
                     <input
-                        type="date"
-                        name="birthDate"
-                        value={userData.birthDate || ""}
+                        type="number"
+                        name="moyenne"
+                        value={userData.moyenne || ""}
                         onChange={handleChange}
+                        placeholder="00"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200

@@ -31,7 +31,6 @@ const FinalStep = () => {
 
                 <Section title="Paiement">
                     <p>Total payé : <b>{userData.payment.total.toLocaleString()} FCFA</b></p>
-                    <p>Preuve : {userData.payment.proof.name}</p>
                 </Section>
 
             </div>

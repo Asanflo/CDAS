@@ -8,7 +8,7 @@ import PersonalInfosStep from "./steps/personalInfosStep";
 import PaymentStep from "./steps/paymentStep";
 import RequestTypeStep from "./steps/requestTypeStep";
 import UploadStep from "./steps/uploadStep";
-import PaymentProofStep from "./steps/paymentVerif";
+// import PaymentProofStep from "./steps/paymentVerif";
 import FinalStep from "./steps/final";
 
 import { X } from "lucide-react";
@@ -24,7 +24,6 @@ const FormProcedure = ( {closeModal} ) => {
         "Informations personnelles",
         "Téleversement de vos documents",
         "Vérification du payement",
-        "validation du payement",
         "dernière vérification et confirmation"
     ];
 
@@ -41,11 +40,8 @@ const FormProcedure = ( {closeModal} ) => {
             
             case 4:
                 return <PaymentStep/>
-
-            case 5:
-                return <PaymentProofStep/>
             
-            case 6:
+            case 5:
                 return <FinalStep/>
         
             default:

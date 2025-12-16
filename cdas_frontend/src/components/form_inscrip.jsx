@@ -10,6 +10,9 @@ import {
   MailPlus,
 } from "lucide-react";
 
+// appel du service
+import { registerUser } from "../services/inscripService";
+
 export default function Register() {
   const [name, setName] = useState("");
   const [numero, setNumero] = useState("");
@@ -19,16 +22,36 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       alert("Les mots de passe ne correspondent pas.");
       return;
     }
-    console.log("Nom:", name);
-    console.log("Email:", email);
-    console.log("Mot de passe:", password);
+    
+    // donnees envoyes
+    const payload = {
+      name,
+      email,
+      password,
+      phone: numero,
+    };
+
+    try {
+      const response = await registerUser(payload);
+      console.log("inscription reussie"), response;
+
+      alert("compte cree avec succes");
+      // Navigate("./form_connex.jsx");
+    } catch (error) {
+      console.error("Erreur inscription :", error);
+
+      alert(
+        error.response?.data?.detail ||
+        "Erreur lors de la création du compte"
+      );
+    }
   };
 
   // Boutons OAuth (à intégrer à ton backend plus tard)
