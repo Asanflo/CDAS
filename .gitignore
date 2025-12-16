@@ -18,3 +18,7 @@ yarn-error.log*
 #build
 dist/
 build/
+
+# ignore les fichiers compilés python
+*.pyc
+__pycache__/

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.forms import BaseInlineFormSet
 from .models import Role, Permission, Utilisateur
 
@@ -15,12 +16,33 @@ class RoleAdmin(admin.ModelAdmin):
     inlines = [PermissionInline]
 
 #ajout de la fonctionnalite liee aux Utilisateurs
-@admin.register(Utilisateur)
-class UtilisateurAdmin(admin.ModelAdmin):
-    list_display = ("nom", "email", "telephone", "role", "is_active", "is_staff")
+class UtilisateurAdmin(BaseUserAdmin):
+    model = Utilisateur
+    list_display = ("email", "nom", "telephone", "role", "is_active", "is_staff")
     list_filter = ("role", "is_active", "is_staff")
-    search_fields = ("nom", "email", "telephone")
+    search_fields = ("email", "nom", "telephone")
+    ordering = ("email",)
 
+    # Définir les champs visibles lors de la modification d’un utilisateur
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Infos personnelles", {"fields": ("nom", "telephone", "role")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+    )
+
+    # Définir les champs visibles lors de la création d’un utilisateur
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "nom", "telephone", "role", "password1", "password2", "is_active", "is_staff"),
+            },
+        ),
+    )
+
+# Enregistrer dans l’admin
+admin.site.register(Utilisateur, UtilisateurAdmin)
 #ajout de la fonctionnalite liee aux Permissions
 @admin.register(Permission)
 class PermissionAdmin(admin.ModelAdmin):

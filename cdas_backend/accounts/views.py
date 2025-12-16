@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -11,27 +12,32 @@ from .models import Utilisateur
 from .serializers import UtilisateurSerializer, UtilisateurRegisterSerializer
 from .services import UtilisateurService
 
-
 #View d'inscription d'un utilisateur
-class InscriptionView(APIView):
+class InscriptionView(GenericAPIView):
     """
-    Endpoint pour l'inscription d'un nouvel utilisateur.
-    Accessible sans authentification (AllowAny).
+        Endpoint pour l'inscription d'un nouvel utilisateur.
+        Accessible sans authentification (AllowAny).
     """
     permission_classes = [AllowAny]
+    serializer_class = UtilisateurRegisterSerializer
 
     def post(self, request):
-        serializer = UtilisateurRegisterSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         try:
-            user = UtilisateurService.create_user_with_default_role(serializer.validated_data)
-        except ValidationError as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            user = UtilisateurService.create_user_with_default_role(
+                serializer.validated_data
+            )
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(UtilisateurSerializer(user).data, status=status.HTTP_201_CREATED)
+        return Response(
+            UtilisateurSerializer(user).data,
+            status=status.HTTP_201_CREATED
+        )
+
+
 
 #Vue gestion utilisateur
 class UtilisateurViewSet(viewsets.ModelViewSet):
