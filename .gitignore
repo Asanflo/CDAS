@@ -6,7 +6,7 @@ db.sqlite3-journal
 
 cenv/
 
-#nodes 
+#nodes
 cdas_frontend/nodes_modules/
 npm-deug.log*
 yarn-error.log*
