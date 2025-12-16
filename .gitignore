@@ -6,7 +6,18 @@ db.sqlite3-journal
 
 cenv/
 
-# Environnements
+#nodes
+cdas_frontend/nodes_modules/
+npm-deug.log*
+yarn-error.log*
+
+#environnements
 .env
-*.env
-cdas_backend/.env
+
+#build
+dist/
+build/
+
+# ignore les fichiers compilés python
+*.pyc
+__pycache__/
