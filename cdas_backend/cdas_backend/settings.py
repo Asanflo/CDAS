@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
 
     'accounts',
+    'procedures.apps.ProceduresConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,10 @@ TEMPLATES = [
         },
     },
 ]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 
 WSGI_APPLICATION = 'cdas_backend.wsgi.application'
 

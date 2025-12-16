@@ -22,19 +22,21 @@ class UtilisateurManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("is_superuser doit être True pour un superuser")
 
-        # Assure-toi qu'il y a un rôle par défaut (ex : Admin)
         if "role" not in extra_fields:
-            role_admin = Role.objects.get_or_create(libelle="Admin", defaults={"description": "Super admin"})
+            role_admin, created = Role.objects.get_or_create(
+                libelle="Admin",
+                defaults={"description": "Super admin"}
+            )
             extra_fields["role"] = role_admin
 
         return self.create_user(email, password, **extra_fields)
+
 
 
 class Utilisateur(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=100, blank=True, null=True)
     email = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
     telephone = models.CharField(max_length=15, blank=True, null=True)
     role = models.ForeignKey("Role", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
@@ -49,7 +51,15 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     objects = UtilisateurManager()
 
     def __str__(self):
-        return self.nom
+        return self.nom if self.nom else self.email
+
+    def has_permission(self, codename: str) -> bool:
+        """
+        Vérifie si l'utilisateur possède la permission avec le codename donné.
+        """
+        if not self.role:
+            return False
+        return self.role.permissions.filter(codename=codename).exists()
 
 class Role(models.Model):
     class Meta:
@@ -61,7 +71,8 @@ class Role(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    permissions = models.ManyToManyField("Permission", related_name="roles", blank=True, null=True)
+    permissions = models.ManyToManyField("Permission", related_name="roles", blank=True)
+
 
     def __str__(self):
         return self.libelle
