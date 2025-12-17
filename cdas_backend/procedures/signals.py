@@ -5,11 +5,9 @@ from .services import collect_payment_cam_pay
 
 @receiver(post_save, sender=Paiement)
 def trigger_payment(sender, instance: Paiement, created, **kwargs):
-    print(f"[DEBUG] Signal post_save déclenché pour Paiement id={instance.id}")
     """
     Dès qu'un Paiement est créé, on initie le paiement via CamPay.
     """
     if created and instance.statut == "EN_ATTENTE" and not instance.reference_transaction:
         # Appelle le service qui interagit avec CamPay
         collect_payment_cam_pay(instance)
-        print(f"[DEBUG] Lancement du paiement pour Paiement id={instance.id}")

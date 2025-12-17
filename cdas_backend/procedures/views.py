@@ -39,8 +39,6 @@ class ProcedureInitialisationView(GenericAPIView):
                 "matricule": request.data.get("etudiant[matricule]"),
                 "nom": request.data.get("etudiant[nom]"),
                 "prenom": request.data.get("etudiant[prenom]"),
-                "email": request.data.get("etudiant[email]"),
-                "telephone": request.data.get("etudiant[telephone]"),
             },
             "paiement": {
                 "telephone_paiement": request.data.get("paiement[telephone_paiement]"),
