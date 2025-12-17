@@ -19,6 +19,9 @@ yarn-error.log*
 dist/
 build/
 
+#medias
+media/
+
 # ignore les fichiers compilés python
 *.pyc
 __pycache__/

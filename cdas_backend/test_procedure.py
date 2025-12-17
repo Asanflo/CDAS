@@ -28,13 +28,12 @@ headers = {
 data = {
     # Procedure
     "procedure[type]": "Authentification",
-    "procedure[motif_procedure]": "Inscription 2026",
+    "procedure[motif_procedure]": "Inscription 2028",
 
     # Étudiant
     "etudiant[matricule]": "2026-001",
-    "etudiant[nom]": "Duont",
-    "etudiant[prenom]": "Jen",
-    "etudiant[email]": "jen.dupont@test.com",
+    "etudiant[nom]": "Loic",
+    "etudiant[prenom]": "Paul",
     "etudiant[telephone]": "699000000",
 
     # Paiement

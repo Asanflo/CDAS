@@ -1,4 +1,8 @@
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -75,3 +79,78 @@ class ProcedureInitialisationView(GenericAPIView):
             status=status.HTTP_201_CREATED
         )
 
+#Vue permettant de mettre le statut du paiement et de la procedure
+@method_decorator(csrf_exempt, name="dispatch")
+class CamPayWebhookView(APIView):
+    """
+    Webhook CamPay
+    - Pas d'auth utilisateur
+    - Pas de CSRF
+    - Sécurisé par X-CAMPAY-KEY
+    """
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        reference = request.data.get("reference")
+        status_campay = request.data.get("status")
+
+        if not reference or not status_campay:
+            return Response(
+                {"detail": "Requête invalide, champs manquants"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        reference = data.get("reference")
+        status_campay = data.get("status")
+
+        if not reference:
+            return Response(
+                {"detail": "Reference manquante"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            paiement = Paiement.objects.select_related("procedure").get(
+                reference_transaction=reference
+            )
+        except Paiement.DoesNotExist:
+            return Response(
+                {"detail": "Paiement introuvable"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # 🔁 Idempotence (très important)
+        if paiement.statut in ["REUSSI", "ECHOUE"]:
+            return Response({"status": "already_processed"})
+
+        # 🔄 Mise à jour des statuts
+        if status_campay == "SUCCESSFUL":
+            paiement.statut = "REUSSI"
+            paiement.procedure.statut = "VALIDEE"
+
+        elif status_campay == "FAILED":
+            paiement.statut = "ECHOUE"
+            paiement.procedure.statut = "REJETEE"
+
+        paiement.response_data = data
+        paiement.procedure.save(update_fields=["statut"])
+        paiement.save(update_fields=["statut", "response_data"])
+
+        return Response({"status": "ok"}, status=status.HTTP_200_OK)
+
+    def get(self, request):
+        """
+        CamPay peut parfois appeler le webhook en GET
+        """
+        print("🔥🔥 WEBHOOK CAMPAY REÇU (GET) 🔥🔥")
+
+        data = request.GET
+        reference = data.get("reference")
+
+        if not reference:
+            return Response({"detail": "Reference manquante"}, status=400)
+
+        return Response({"status": "ok"})

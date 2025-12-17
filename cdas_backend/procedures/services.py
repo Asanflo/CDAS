@@ -94,8 +94,8 @@ def verifier_statut_paiement(paiement: Paiement):
     statut = status_data.get("status")
 
     if statut == "SUCCESSFUL":
-        paiement.statut = "VALIDEE"
-        paiement.procedure.statut = "VALIDE"
+        paiement.statut = "REUSSI"
+        paiement.procedure.statut = "VALIDEE"
     elif statut == "FAILED":
         paiement.statut = "ECHOUE"
         paiement.procedure.statut = "REJETEE"
