@@ -10,6 +10,7 @@ export const registerUser = async (userData) => {
     return response.data;
 };
 
+
 /**
  * LOGIN avec Google
  * POST /api/v1/auth/google/login/

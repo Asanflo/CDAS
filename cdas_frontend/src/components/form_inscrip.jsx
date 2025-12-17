@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Mail,
   Lock,
@@ -22,6 +23,8 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,10 +35,10 @@ export default function Register() {
     
     // donnees envoyes
     const payload = {
-      name,
-      email,
-      password,
-      phone: numero,
+      nom: name,
+      email: email,
+      telephone: numero,
+      password: password,
     };
 
     try {
@@ -43,7 +46,7 @@ export default function Register() {
       console.log("inscription reussie"), response;
 
       alert("compte cree avec succes");
-      // Navigate("./form_connex.jsx");
+      navigate("/login");
     } catch (error) {
       console.error("Erreur inscription :", error);
 
