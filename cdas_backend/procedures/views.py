@@ -143,13 +143,10 @@ class CamPayWebhookView(APIView):
 
     def get(self, request):
         """
-        CamPay peut parfois appeler le webhook en GET
+        Lorsque Campay appelle la methode en GET
         """
-        print("🔥🔥 WEBHOOK CAMPAY REÇU (GET) 🔥🔥")
-
         data = request.GET
         reference = data.get("reference")
-
         if not reference:
             return Response({"detail": "Reference manquante"}, status=400)
 
