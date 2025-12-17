@@ -31,7 +31,11 @@ SECRET_KEY = 'django-insecure-gt2t+hzwl@ves9mq5w_(#1yyj768$h#84u3!+8x(nxp9m&12k(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "premonumental-tweedy-angelina.ngrok-free.dev",
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
@@ -165,6 +169,9 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,  # si False, swagger UI n'inclut pas le schéma brut
 }
+
+#Campay webhook token
+CAMPAY_WEBHOOK_KEY = os.getenv("CAMPAY_WEBHOOK_KEY")
 
 
 # Database
