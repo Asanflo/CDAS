@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from accounts.models import Role, Utilisateur
-from procedures.models import Procedure, Etudiant, Document, Paiement
+from .models import Procedure, Etudiant, Document, Paiement
 
 User = get_user_model()
 
