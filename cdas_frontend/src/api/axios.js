@@ -3,9 +3,6 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api", // adapte si besoin
   timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // 🔐 Intercepteur pour ajouter le token automatiquement

@@ -38,6 +38,7 @@ export const initialiserProcedure = async (data) => {
         formData.append(`documents[${index}][valeur]`, doc.valeur);
         }
     });
+
     if (data.documents.length === 0) {
     alert("Ajoutez au moins un document !");
     return;
@@ -54,14 +55,15 @@ export const initialiserProcedure = async (data) => {
 // }
 
 // console.log("Token envoyé :", localStorage.getItem("access_token"));
+console.log("TOKEN =", localStorage.getItem("access_token"));
 
 
+    
     // appel API
     const response = await api.post("/v1/procedures/initialisation/", formData, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }
-
     });
 
     return response.data;
