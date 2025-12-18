@@ -1,0 +1,170 @@
+/* ===============================
+   VARIABLES CDAS
+================================ */
+:root {
+    --cdas-primary: #4f46e5;
+    --cdas-secondary: #4338ca;
+    --cdas-accent: #facc15;
+
+    --cdas-text-dark: #1f2937;
+    --cdas-text-muted: #6b7280;
+    --cdas-text-light: #ffffff;
+}
+
+/* ===============================
+   RESET IMPORTANT
+================================ */
+body,
+.content-wrapper,
+.content {
+    background-color: #f5f7fb !important;
+    color: var(--cdas-text-dark) !important;
+}
+
+/* ===============================
+   TITRES (fond clair)
+================================ */
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4 {
+    color: var(--cdas-secondary) !important;
+    font-weight: 600;
+}
+
+/* ===============================
+   LIENS (fond clair)
+================================ */
+.content-wrapper a {
+    color: var(--cdas-primary) !important;
+}
+
+.content-wrapper a:hover {
+    color: var(--cdas-secondary) !important;
+}
+
+/* ===============================
+   SIDEBAR (fond foncé)
+================================ */
+.main-sidebar {
+    background-color: var(--cdas-secondary) !important;
+}
+
+.main-sidebar,
+.main-sidebar * {
+    color: var(--cdas-text-light) !important;
+}
+
+.nav-sidebar .nav-link.active {
+    background-color: var(--cdas-accent) !important;
+    color: #000 !important;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.brand-link {
+    background-color: var(--cdas-primary) !important;
+}
+
+.brand-text {
+    color: var(--cdas-text-light) !important;
+    font-weight: 600;
+}
+
+/* ===============================
+   TABLES (fond blanc)
+================================ */
+.table {
+    background-color: #ffffff !important;
+}
+
+.table th {
+    color: var(--cdas-secondary) !important;
+    font-weight: 600;
+}
+
+.table td {
+    color: var(--cdas-text-dark) !important;
+}
+
+/* ===============================
+   FORMULAIRES (GENERAL)
+================================ */
+.form-group label {
+    color: var(--cdas-text-dark) !important;
+    font-weight: 500;
+}
+
+.form-control {
+    color: var(--cdas-text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* ===============================
+   BOUTONS
+================================ */
+.btn-primary {
+    background-color: var(--cdas-primary) !important;
+    border-color: var(--cdas-primary) !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--cdas-secondary) !important;
+}
+
+/* ===============================
+   LOGIN PAGE
+================================ */
+.login-page {
+    background: linear-gradient(135deg, #4338ca, #4f46e5) !important;
+}
+
+/* Carte de login */
+.login-box {
+    margin: auto !important;
+    width: 420px;
+}
+
+/* Carte blanche */
+.login-card-body {
+    border-radius: 16px;
+    padding: 2rem;
+    background-color: #ffffff !important;
+}
+
+/* Titre login */
+.login-card-body h1,
+.login-card-body h2 {
+    color: var(--cdas-secondary) !important;
+    text-align: center;
+}
+
+/* ===============================
+   ALIGNEMENT LABEL / INPUT
+================================ */
+.login-card-body .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Labels */
+.login-card-body label {
+    color: var(--cdas-text-dark) !important;
+    font-weight: 500;
+}
+
+/* Inputs */
+.login-card-body input {
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+/* Bouton login */
+.login-card-body .btn-primary {
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px;
+}
