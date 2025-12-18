@@ -8,15 +8,34 @@ import PersonalInfosStep from "./steps/personalInfosStep";
 import PaymentStep from "./steps/paymentStep";
 import RequestTypeStep from "./steps/requestTypeStep";
 import UploadStep from "./steps/uploadStep";
-// import PaymentProofStep from "./steps/paymentVerif";
 import FinalStep from "./steps/final";
+
+import { initialiserProcedure } from "../services/procedureService"; 
 
 import { X } from "lucide-react";
 
 
 const FormProcedure = ( {closeModal} ) => {
     const [currentStep, setCurrentStep] = useState (1);
-    const [userData, setUserData] = useState ('');
+    const [userData, setUserData] = useState({
+        procedure: {
+            type: '',
+            motif_procedure: '',
+        },
+        etudiant: {
+            matricule: '',
+            nom: '',
+            prenom: '',
+            filiere: '',
+            ecole: '',
+            moyenne_generale: '',
+        },
+        paiement: {
+            telephone_paiement: '',
+            montant: '',
+        },
+        documents: []
+    });
     const [finalData, setFinalData] = useState([]);
 
     const Steps = [
@@ -52,10 +71,27 @@ const FormProcedure = ( {closeModal} ) => {
     const handleClick = (direction) => {
         let newStep = currentStep;
 
-        direction === "Suivant" ? newStep++ : newStep-- ;
+        if (direction === "Suivant") {
+            newStep++;
+        } else {
+            newStep--;
+        }
 
-        newStep >0 && newStep <= Steps.length && setCurrentStep(newStep);
-    }
+        if (newStep >= 1 && newStep <= Steps.length) {
+            setCurrentStep(newStep);
+        }
+    };
+
+
+    const handleSubmit = async () => {
+       
+        try {
+            await initialiserProcedure(userData);
+            closeModal();
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de la procédure :", error.response?.data || error.message);
+        }
+    };
 
 
     return (
@@ -97,6 +133,7 @@ const FormProcedure = ( {closeModal} ) => {
                 <div className="mt-6 px-4">
                     <StepperControl
                         handleClick = {handleClick}
+                        handleSubmit = {handleSubmit}
                         currentStep = {currentStep}
                         steps ={Steps}
                     />

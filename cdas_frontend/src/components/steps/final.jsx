@@ -3,54 +3,60 @@ import { StepperContext } from "../../context/stepperContext";
 import { CheckCircle } from "lucide-react";
 
 const FinalStep = () => {
-    const { userData } = useContext(StepperContext);
+  const { userData } = useContext(StepperContext);
 
-    return (
-        <div className="flex flex-col gap-6 animate-fadeIn">
+//   const documentsCount = userData.documents?.length || 0;
+//   const payment = userData.paiement || {};
 
-            <h3 className="text-lg font-semibold text-gray-800">
-                Récapitulatif de la demande
-            </h3>
+  return (
+    <div className="flex flex-col gap-6 animate-fadeIn">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <h3 className="text-lg font-semibold text-gray-800">
+        Récapitulatif de la demande
+      </h3>
 
-                <Section title="Procédure" className="bg-amber-200 rounded-xl shadow p-5">
-                    <p>Type : <b>{userData.requestType}</b></p>
-                    <p>Motif : {userData.motif}</p>
-                </Section>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <Section title="Informations personnelles">
-                    <p>{userData.lastName} {userData.firstName}</p>
-                    <p>Email : {userData.email}</p>
-                    <p>Téléphone : {userData.phone}</p>
-                </Section>
+        <Section title="Procédure">
+          <p>Type : <b>{userData.procedure.type || "-"}</b></p>
+          <p>Motif : {userData.procedure.motif_procedure || "-"}</p>
+        </Section>
 
-                <Section title="Documents">
-                    <p>{userData.documents.length} document(s) téléversé(s)</p>
-                </Section>
+        <Section title="Informations personnelles">
+          <p>{userData.etudiant.nom || "-"} {userData.etudiant.prenom || "-"}</p>
+          <p>Matricule : {userData.etudiant.matricule || "-"}</p>
+          <p>Filière : {userData.etudiant.filiere || "-"}</p>
+          <p>École : {userData.etudiant.ecole || "-"}</p>
+          <p>Moyenne : {userData.etudiant.moyenne_generale || "-"}</p>
+        </Section>
 
-                <Section title="Paiement">
-                    <p>Total payé : <b>{userData.payment.total.toLocaleString()} FCFA</b></p>
-                </Section>
+        <Section title="Documents">
+          <p>{userData.documents.length} document(s) téléversé(s)</p>
+        </Section>
 
-            </div>
+        <Section title="Paiement">
+          <p>Total : <b>{userData.paiement.montant} FCFA</b></p>
+          <p>Téléphone : {userData.paiement.telephone_paiement}</p>
+        </Section>
 
-            <div className="flex items-center gap-2 text-green-600 font-semibold">
-                <CheckCircle />
-                Toutes les informations sont prêtes à être soumises
-            </div>
+      </div>
 
-        </div>
-    );
+      <div className="flex items-center gap-2 text-green-600 font-semibold">
+        <CheckCircle />
+        Toutes les informations sont prêtes à être soumises
+      </div>
+
+    </div>
+  );
 };
 
 const Section = ({ title, children }) => (
-    <div>
-        <h4 className="font-semibold text-gray-700 mb-1">{title}</h4>
-        <div className="text-sm text-gray-600 space-y-1">
-            {children}
-        </div>
+  <div className="bg-white rounded-xl shadow-sm p-5">
+    <h4 className="font-semibold text-gray-700 mb-2">{title}</h4>
+    <div className="text-sm text-gray-600 space-y-1">
+      {children}
     </div>
+  </div>
 );
 
 export default FinalStep;
