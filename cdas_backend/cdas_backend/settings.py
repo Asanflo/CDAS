@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jazzmin',
 
 
     'rest_framework',
@@ -119,6 +120,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
     ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 SITE_ID = 1
@@ -174,6 +177,34 @@ SPECTACULAR_SETTINGS = {
 
 #Campay webhook token
 CAMPAY_WEBHOOK_KEY = os.getenv("CAMPAY_WEBHOOK_KEY")
+
+#Personnalisation site admin
+JAZZMIN_SETTINGS = {
+    "site_title": "CDAS Admin",
+    "site_header": "CDAS Diplomas",
+    "site_brand": "CDAS",
+    "welcome_sign": "Bienvenue dans le système CDAS",
+    "copyright": "CDAS Cameroun",
+
+    "site_logo": "icones/logo.png",
+    "login_logo": "icones/logo.png",
+    "login_logo_dark": "icones/logo.png",
+
+    "theme": "cosmo",  # ou darkly, flatly
+
+    "custom_css": "admin/css/custom.css",
+
+    "topmenu_links": [
+        {"name": "Accueil", "url": "admin:index", "permissions": ["auth.view_user"]},
+    ],
+
+    "icons": {
+        "auth.user": "fas fa-user",
+        "procedures.procedure": "fas fa-file-alt",
+    },
+
+    "changeform_format": "horizontal_tabs",
+}
 
 
 # Database
@@ -233,7 +264,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

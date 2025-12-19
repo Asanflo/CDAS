@@ -1,0 +1,366 @@
+/* ===============================
+   VARIABLES CDAS
+================================ */
+:root {
+  --cdas-primary: #5b51d6;
+  --cdas-secondary: #4338ca;
+  --cdas-dark: #312e81;
+  --cdas-light-bg: #e8eaf6;
+  --cdas-card-bg: #ffffff;
+  --cdas-text-dark: #1e293b;
+  --cdas-text-gray: #64748b;
+  --cdas-green: #10b981;
+  --cdas-red: #ef4444;
+}
+
+/* ===============================
+   FOND GLOBAL
+================================ */
+body,
+#container,
+.dashboard #content {
+  background-color: var(--cdas-light-bg) !important;
+  color: var(--cdas-text-dark) !important;
+}
+
+/* ===============================
+   HEADERS / BARRES
+================================ */
+#header {
+  background-color: var(--cdas-primary) !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem;
+}
+
+#header h1,
+#header a {
+  color: white !important;
+}
+
+/* TITRES DES APPLICATIONS EN BLANC */
+#header h1,
+#header .app-title,
+.app-label {
+  color: white !important;
+}
+
+.breadcrumbs {
+  background-color: transparent !important;
+  color: var(--cdas-text-gray) !important;
+  padding: 1rem 1.5rem;
+}
+
+.breadcrumbs a {
+  color: var(--cdas-primary) !important;
+  text-decoration: none;
+}
+
+/* ===============================
+   TITRES DE CONTENU
+================================ */
+#content h1,
+#content h2,
+#content h3 {
+  color: var(--cdas-text-dark) !important;
+  font-weight: 600;
+}
+
+/* ===============================
+   LIENS
+================================ */
+a {
+  color: var(--cdas-primary) !important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--cdas-secondary) !important;
+  text-decoration: underline;
+}
+
+#header a:hover {
+  color: #c7d2fe !important;
+}
+
+.module caption a,
+.module caption a.section,
+caption a {
+  color: white !important;
+  text-decoration: none;
+}
+
+/* ===============================
+   BLOCS / CARDS / MODULES
+================================ */
+.module,
+.dashboard-module {
+  background-color: var(--cdas-card-bg) !important;
+  border-radius: 12px;
+  color: var(--cdas-text-dark) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.module caption,
+thead th {
+  background-color: var(--cdas-primary) !important;
+  color: white !important;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+/* ===============================
+   TABLES
+================================ */
+table {
+  background-color: var(--cdas-card-bg) !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+tbody td {
+  background-color: white !important;
+  color: var(--cdas-text-dark) !important;
+  border-color: #e5e7eb !important;
+  padding: 0.75rem 1rem;
+}
+
+tbody tr:nth-child(even) td {
+  background-color: #f9fafb !important;
+}
+
+/* BADGES DE STATUT */
+.badge,
+tbody td span {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Statut "En cours" */
+tbody td .status-active,
+tbody td span:contains("En cours") {
+  background-color: #d1fae5 !important;
+  color: var(--cdas-green) !important;
+}
+
+/* Statut "Annulé" */
+tbody td .status-inactive,
+tbody td span:contains("Annulé") {
+  background-color: #fee2e2 !important;
+  color: var(--cdas-red) !important;
+}
+
+/* ===============================
+   FORMULAIRES
+================================ */
+input,
+select,
+textarea {
+  background-color: white !important;
+  color: var(--cdas-text-dark) !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: var(--cdas-primary) !important;
+  box-shadow: 0 0 0 3px rgba(91, 81, 214, 0.1) !important;
+}
+
+/* ===============================
+   LOGIN PAGE
+================================ */
+body.login {
+  background: linear-gradient(to bottom, #f1f5f9, #e2e8f0, #cbd5e1) !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+}
+
+.login #container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.login h1.cdas-logo {
+  display: none !important;
+}
+
+body.login #header,
+body.login .skip-to-content-link {
+    display: none !important;
+}
+
+.login #content {
+  background: rgba(255, 255, 255, 0.7) !important; /* fond semi-transparent */
+  backdrop-filter: blur(12px) !important; /* blur type Glassmorphism */
+  padding: 3rem 2.5rem !important;
+  border-radius: 2rem !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+/* Icone + titre + sous-titre */
+.login #content::before {
+  content: "🎓" !important;
+  font-size: 3rem !important;
+  display: block !important;
+  text-align: center !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.login #content h1 {
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.875rem !important;
+  font-weight: 700 !important;
+  color: var(--cdas-text-dark) !important;
+  margin-bottom: 0.5rem !important;
+  content: "Bienvenue 👋";
+}
+
+.login form::before {
+  content: "Connecte-toi pour continuer" !important;
+  display: block !important;
+  text-align: center !important;
+  color: var(--cdas-text-gray) !important;
+  margin-bottom: 2rem !important;
+  font-size: 0.95rem !important;
+}
+
+/* Option : rendre le label plus moderne et minimal */
+body.login .form-row {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+}
+body.login label {
+    display: block !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    color: var(--cdas-text-dark) !important;
+    margin-bottom: 0.5rem !important; /* <-- petit espacement sous le label */
+}
+
+/* Champs du formulaire avec icônes */
+.login input[type="text"],
+.login input[type="email"],
+.login input[type="password"] {
+  width: 100% !important;
+  padding: 0.65rem 1rem !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid #e5e7eb !important;
+  background-color: #ffffff !important;
+  font-size: 0.95rem !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+.login input[type="email"] {
+  background-repeat: no-repeat !important;
+  background-position: 12px center !important;
+}
+
+.login input[type="password"] {
+  background-repeat: no-repeat !important;
+  background-position: 12px center !important;
+}
+
+/* Bouton connexion style React */
+.login input[type="submit"] {
+  width: 100% !important;
+  padding: 0.875rem 1.5rem !important;
+  background: var(--cdas-primary) !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 1rem !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  box-sizing: border-box !important;
+}
+
+.login input[type="submit"]:hover {
+  background: var(--cdas-secondary) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(91, 81, 214, 0.3) !important;
+}
+
+/* Lien inscription */
+.login .login-footer {
+  text-align: center !important;
+  margin-top: 1.5rem !important;
+  color: var(--cdas-text-gray) !important;
+  font-size: 0.9rem !important;
+}
+
+.login .login-footer a {
+  color: var(--cdas-primary) !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+.login .login-footer a:hover {
+  text-decoration: underline !important;
+}
+
+
+/* ===============================
+   LIENS ADD - STYLE SIMPLE
+================================ */
+.object-tools a,
+.addlink,
+a.addlink {
+  background: none !important;
+  color: var(--cdas-primary) !important;
+  text-decoration: none !important;
+  font-weight: normal !important;
+  display: inline !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.object-tools a:hover,
+.addlink:hover,
+a.addlink:hover {
+  text-decoration: underline !important;
+  background: none !important;
+}
+
+/* Retire le "+" ajouté automatiquement */
+.object-tools a::before,
+.addlink::before {
+  content: none !important;
+}
+
+/* ===============================
+   TITRES SUR FOND BLEU EN BLANC
+================================ */
+.module caption,
+thead th,
+.module h2,
+th {
+  color: white !important;
+}

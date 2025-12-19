@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}CDAS Admin{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'admin/css/custom.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 class="cdas-logo">
+    🎓 CDAS Diplomas
+</h1>
+{% endblock %}

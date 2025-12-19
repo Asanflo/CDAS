@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Utilisateur, Role
+from django.db.models import Q
 
 class UtilisateurService:
 
@@ -25,8 +26,10 @@ class UtilisateurService:
     def create_user_with_default_role(data):
         """
         Création d'un utilisateur en appliquant la règle métier :
-        - Si aucun rôle n'est fourni → assigner automatiquement le rôle ID=1
+        - Si aucun rôle n'est fourni → assigner automatiquement le rôle dont le libellé est 'users', 'user' ou 'utilisateur'
+        (insensible à la casse)
         """
+
         # Vérifie si role_id est présent dans les données
         role_id = data.get("role_id")
 
@@ -36,11 +39,16 @@ class UtilisateurService:
             except ObjectDoesNotExist:
                 raise ValueError("Role invalide")
         else:
-            # Aucun role fourni → prendre le rôle ID=1
+            # Aucun role fourni → chercher par libellé
             try:
-                role = Role.objects.get(id=1)
+                role = Role.objects.get(
+                    Q(libelle__iexact="users") |
+                    Q(libelle__iexact="utilisateur") |
+                    Q(libelle__iexact="user") |
+                    Q(libelle__iexact="utilisateurs")
+                )
             except ObjectDoesNotExist:
-                raise ValueError("Aucun rôle par défaut (ID=1) n'existe dans la base")
+                raise ValueError("Aucun rôle par défaut (libellé 'users'/'user'/'utilisateur') n'existe dans la base")
 
         # Créer l'utilisateur
         utilisateur = Utilisateur(

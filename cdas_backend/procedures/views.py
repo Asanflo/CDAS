@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -10,7 +10,8 @@ from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
 
 from .models import Paiement, Procedure
-from .serializers import ProcedureInitialisationSerializer
+from .serializers import ProcedureInitialisationSerializer, ProcedureReadSerializer, PaiementListSerializer
+
 
 class ProcedureInitialisationView(GenericAPIView):
     """
@@ -39,8 +40,6 @@ class ProcedureInitialisationView(GenericAPIView):
                 "matricule": request.data.get("etudiant[matricule]"),
                 "nom": request.data.get("etudiant[nom]"),
                 "prenom": request.data.get("etudiant[prenom]"),
-                "email": request.data.get("etudiant[email]"),
-                "telephone": request.data.get("etudiant[telephone]"),
             },
             "paiement": {
                 "telephone_paiement": request.data.get("paiement[telephone_paiement]"),
@@ -78,6 +77,17 @@ class ProcedureInitialisationView(GenericAPIView):
             {"id": procedure.id},
             status=status.HTTP_201_CREATED
         )
+
+    def get(self, request, *args, **kwargs):
+        procedures = (
+            Procedure.objects
+            .filter(initiator=request.user)
+            .order_by("-cree_le")
+        )
+
+        serializer = ProcedureReadSerializer(procedures, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 #Vue permettant de mettre le statut du paiement et de la procedure
 @method_decorator(csrf_exempt, name="dispatch")
@@ -143,14 +153,27 @@ class CamPayWebhookView(APIView):
 
     def get(self, request):
         """
-        CamPay peut parfois appeler le webhook en GET
+        Lorsque Campay appelle la methode en GET
         """
-        print("🔥🔥 WEBHOOK CAMPAY REÇU (GET) 🔥🔥")
-
         data = request.GET
         reference = data.get("reference")
-
         if not reference:
             return Response({"detail": "Reference manquante"}, status=400)
 
         return Response({"status": "ok"})
+
+class PaiementListView(ListAPIView):
+    """
+    Endpoint pour voir la liste des paiements d'un utilisateur
+    """
+
+    serializer_class = PaiementListSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return (
+            Paiement.objects
+            .filter(procedure__initiator=self.request.user)
+            .select_related("procedure")
+            .order_by("-initie_le")
+        )
