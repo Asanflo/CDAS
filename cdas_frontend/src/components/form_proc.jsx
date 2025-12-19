@@ -8,15 +8,34 @@ import PersonalInfosStep from "./steps/personalInfosStep";
 import PaymentStep from "./steps/paymentStep";
 import RequestTypeStep from "./steps/requestTypeStep";
 import UploadStep from "./steps/uploadStep";
-import PaymentProofStep from "./steps/paymentVerif";
 import FinalStep from "./steps/final";
+
+import { initialiserProcedure } from "../services/procedureService"; 
 
 import { X } from "lucide-react";
 
 
 const FormProcedure = ( {closeModal} ) => {
     const [currentStep, setCurrentStep] = useState (1);
-    const [userData, setUserData] = useState ('');
+    const [userData, setUserData] = useState({
+        procedure: {
+            type: '',
+            motif_procedure: '',
+        },
+        etudiant: {
+            matricule: '',
+            nom: '',
+            prenom: '',
+            filiere: '',
+            ecole: '',
+            moyenne_generale: '',
+        },
+        paiement: {
+            telephone_paiement: '',
+            montant: '',
+        },
+        documents: []
+    });
     const [finalData, setFinalData] = useState([]);
 
     const Steps = [
@@ -24,7 +43,6 @@ const FormProcedure = ( {closeModal} ) => {
         "Informations personnelles",
         "Téleversement de vos documents",
         "Vérification du payement",
-        "validation du payement",
         "dernière vérification et confirmation"
     ];
 
@@ -41,11 +59,8 @@ const FormProcedure = ( {closeModal} ) => {
             
             case 4:
                 return <PaymentStep/>
-
-            case 5:
-                return <PaymentProofStep/>
             
-            case 6:
+            case 5:
                 return <FinalStep/>
         
             default:
@@ -56,10 +71,30 @@ const FormProcedure = ( {closeModal} ) => {
     const handleClick = (direction) => {
         let newStep = currentStep;
 
-        direction === "Suivant" ? newStep++ : newStep-- ;
+        if (direction === "Suivant") {
+            newStep++;
+        } else {
+            newStep--;
+        }
 
-        newStep >0 && newStep <= Steps.length && setCurrentStep(newStep);
-    }
+        if (newStep >= 1 && newStep <= Steps.length) {
+            setCurrentStep(newStep);
+        }
+    };
+
+
+    const handleSubmit = async () => {
+       
+        try {
+            await initialiserProcedure(userData);
+
+            alert("Votre requête a été soumise, Nous vous ferons signe de la progression de votre dossier ulterieurement. ")
+            
+            closeModal();
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de la procédure :", error.response?.data || error.message);
+        }
+    };
 
 
     return (
@@ -69,15 +104,15 @@ const FormProcedure = ( {closeModal} ) => {
                 {/* Bouton fermer */}
                 <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-gray-600 hover:text-black"
+                className="absolute top-4 right-4 text-gray-600 hover:text-black cursor-pointer"
                 >
                 <X size={24} />
                 </button>
 
-                <h2 className="text-2xl font-bold mb-6">Nouvelle Procédure</h2>
+                <h2 className="text-2xl font-bold mb-2">Nouvelle Procédure</h2>
 
                 {/* stepper */}
-                <div className="mt-6 mb-10 px-4 ">
+                <div className="mt-4 mb-6 px-4 ">
                     <Stepper
                         steps = {Steps}
                         currentStep = {currentStep}
@@ -98,9 +133,10 @@ const FormProcedure = ( {closeModal} ) => {
                 </div>
 
                 {/* controle de navigation */}
-                <div className="mt-6 px-4">
+                <div className="mt-2 px-2">
                     <StepperControl
                         handleClick = {handleClick}
+                        handleSubmit = {handleSubmit}
                         currentStep = {currentStep}
                         steps ={Steps}
                     />

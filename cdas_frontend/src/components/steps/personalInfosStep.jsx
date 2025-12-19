@@ -6,11 +6,16 @@ const PersonalInfosStep = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserData(prev => ({
-            ...prev,
+
+        setUserData({
+            ...userData,
+            etudiant: {
+            ...userData.etudiant,
             [name]: value
-        }));
+            }
+        });
     };
+
 
     return(
         <div className="flex flex-col gap-6 animate-fadeIn">
@@ -24,12 +29,30 @@ const PersonalInfosStep = () => {
                 {/* Nom */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
+                        Matricule
+                    </label>
+                    <input
+                        type="text"
+                        name="matricule"
+                        value={userData.etudiant.matricule || ""}
+                        onChange={handleChange}
+                        placeholder="Ex : 24G093454"
+                        className="w-full rounded-lg border border-gray-300 bg-white p-3
+                        text-gray-700 shadow-sm
+                        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
+                        transition-all duration-200"
+                    />
+                </div>
+
+                {/* Nom */}
+                <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold text-gray-700">
                         Nom
                     </label>
                     <input
                         type="text"
-                        name="lastName"
-                        value={userData.lastName || ""}
+                        name="nom"
+                        value={userData.etudiant.nom}
                         onChange={handleChange}
                         placeholder="Ex : Mamba"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
@@ -46,8 +69,8 @@ const PersonalInfosStep = () => {
                     </label>
                     <input
                         type="text"
-                        name="firstName"
-                        value={userData.firstName || ""}
+                        name="prenom"
+                        value={userData.etudiant.prenom}
                         onChange={handleChange}
                         placeholder="Ex : Ozone"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
@@ -57,17 +80,17 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Email */}
+                {/* Filiere */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Adresse email
+                        Filière
                     </label>
                     <input
-                        type="email"
-                        name="email"
-                        value={userData.email || ""}
+                        type="text"
+                        name="filiere"
+                        value={userData.etudiant.filiere}
                         onChange={handleChange}
-                        placeholder="exemple@email.com"
+                        placeholder="Ex: Genie informatique"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
@@ -75,17 +98,17 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Téléphone */}
+                {/* Ecole */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Téléphone
+                        Ecole
                     </label>
                     <input
-                        type="tel"
-                        name="phone"
-                        value={userData.phone || ""}
+                        type="text"
+                        name="ecole"
+                        value={userData.etudiant.ecole}
                         onChange={handleChange}
-                        placeholder="+237 6XX XXX XXX"
+                        placeholder="Ex: ENSPD"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
@@ -93,36 +116,17 @@ const PersonalInfosStep = () => {
                     />
                 </div>
 
-                {/* Sexe */}
+                {/* Moyenne */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-gray-700">
-                        Sexe
-                    </label>
-                    <select
-                        name="gender"
-                        value={userData.gender || ""}
-                        onChange={handleChange}
-                        className="w-full rounded-lg border border-gray-300 bg-white p-3
-                        text-gray-700 shadow-sm
-                        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
-                        transition-all duration-200"
-                    >
-                        <option value="">-- Sélectionner --</option>
-                        <option value="M">Masculin</option>
-                        <option value="F">Féminin</option>
-                    </select>
-                </div>
-
-                {/* Date de naissance */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-sm font-semibold text-gray-700">
-                        Date de naissance
+                        Moyenne Générale
                     </label>
                     <input
-                        type="date"
-                        name="birthDate"
-                        value={userData.birthDate || ""}
+                        type="number"
+                        name="moyenne_generale"
+                        value={userData.etudiant.moyenne_generale}
                         onChange={handleChange}
+                        placeholder="00"
                         className="w-full rounded-lg border border-gray-300 bg-white p-3
                         text-gray-700 shadow-sm
                         focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200

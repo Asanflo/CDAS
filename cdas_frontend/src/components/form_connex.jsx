@@ -1,15 +1,44 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff, LogIn, GraduationCap } from "lucide-react";
+
+import { login } from "../services/authService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Mot de passe:", password);
+
+    setError('');
+    setLoading(true);
+
+    try {
+      await login({
+        email: email,
+        password: password,
+      });
+
+      // redirection
+      navigate('/home');
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setError("Email ou mot de passe incorrect ");
+      } else {
+        setError("Erreur serveur, reessayer plus tard.");
+      }
+      
+    } finally {
+      setLoading(false);
+    }
+    
   };
 
   return (
@@ -52,23 +81,37 @@ export default function Login() {
               required
             />
 
+
             {/* Icône show/hide password */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
+              data-testid="toggle-password"
+              >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+          
+          {/* erreur */}
+          {error && (
+            <p className="text-red-600 text-sm text-center font-medium">
+              {error}
+            </p>
+          )}
 
           {/* Bouton de connexion */}
           <button
             type="submit"
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg"
+            disabled={loading}
+            className={`w-full py-3 font-semibold rounded-xl flex items-center justify-center gap-2 transition-all shadow-md
+              ${loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white hover:shadow-lg"
+              }`}
           >
             <LogIn size={20} />
-            Se connecter
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
 
         </form>

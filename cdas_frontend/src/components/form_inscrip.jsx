@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Mail,
   Lock,
@@ -10,6 +11,9 @@ import {
   MailPlus,
 } from "lucide-react";
 
+// appel du service
+import { registerUser } from "../services/inscripService";
+
 export default function Register() {
   const [name, setName] = useState("");
   const [numero, setNumero] = useState("");
@@ -19,16 +23,38 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       alert("Les mots de passe ne correspondent pas.");
       return;
     }
-    console.log("Nom:", name);
-    console.log("Email:", email);
-    console.log("Mot de passe:", password);
+    
+    // donnees envoyes
+    const payload = {
+      nom: name,
+      email: email,
+      telephone: numero,
+      password: password,
+    };
+
+    try {
+      const response = await registerUser(payload);
+      console.log("inscription reussie"), response;
+
+      alert("compte cree avec succes");
+      navigate("/login");
+    } catch (error) {
+      console.error("Erreur inscription :", error);
+
+      alert(
+        error.response?.data?.detail ||
+        "Erreur lors de la création du compte"
+      );
+    }
   };
 
   // Boutons OAuth (à intégrer à ton backend plus tard)
@@ -36,9 +62,9 @@ export default function Register() {
     console.log("Créer le compte avec Google");
   };
 
-  const signUpWithYahoo = () => {
-    console.log("Créer le compte avec Yahoo");
-  };
+  // const signUpWithYahoo = () => {
+  //   console.log("Créer le compte avec Yahoo");
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-50 from-gray-100 via-gray-200 to-gray-300 p-4">
@@ -63,7 +89,7 @@ export default function Register() {
             Continuer avec Google
           </button>
 
-          <button
+          {/* <button
             onClick={signUpWithYahoo}
             className="w-full flex items-center justify-center gap-3 py-2 border border-gray-300 rounded-xl bg-white hover:bg-gray-100 transition font-medium"
           >
@@ -73,7 +99,7 @@ export default function Register() {
               className="w-5 h-5"
             />
             Continuer avec Yahoo
-          </button>
+          </button> */}
         </div>
 
         {/* Séparateur */}
