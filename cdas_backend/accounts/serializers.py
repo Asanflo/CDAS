@@ -7,7 +7,7 @@ class UtilisateurRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     telephone = serializers.CharField(max_length=20)
     password = serializers.CharField(write_only=True)
-    role_id = serializers.IntegerField()
+    role_id = serializers.IntegerField(required=False)
 
     def create(self, validated_data):
         return UtilisateurService.creer_utilisateur(validated_data)

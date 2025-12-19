@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, LogIn, UserPlus, GraduationCap } from "lucide-react";
 
 export default function Intro () {
@@ -49,26 +50,20 @@ export default function Intro () {
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 ml-5">
 
                     {/* Bouton de connexion */}
-                    <a href="/login"
+                    <Link to="/login"
                         className="px-6 py-3 bg-white text-indigo-700 font-semibold rounded-xl
                         shadow-lg hover:bg-amber-400 hover:text-amber-50 transition flex items-center gap-2">
                             <LogIn size={20}/> Se Connecter
-                    </a>
+                    </Link>
 
                     {/* Bouton d'inscription */}
-                    <a href="/register"
+                    <Link to="/register"
                         className="px-6 py-3 bg-indigo-500  font-semibold rounded-xl
                         shadow-lg hover:bg-indigo-400 transition flex items-center gap-2">
                             <UserPlus size={20}/> S'inscrire
-                    </a>
+                    </Link>
 
                 </div>
-
-                {/* Flèche pour effet UX */}
-                {/* <div className="flex items-center gap-2 opacity-60 pt-4">
-                    <ArrowRight size={18} />  
-                    <span>Cliquez pour commencer</span>
-                </div> */}
 
             </div>
         </div>

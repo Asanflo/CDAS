@@ -10,26 +10,20 @@ const UploadStep = () => {
     const handleFileUpload = (e) => {
         const files = Array.from(e.target.files);
 
-        const newDocs = files.map((file, index) => ({
-            id: Date.now() + index,
-            name: file.name,
-            size: file.size,
-            file
-        }));
-
-        setUserData(prev => ({
-            ...prev,
-            documents: [...documents, ...newDocs]
-        }));
-
+        setUserData({
+            ...userData,
+            documents: [...documents, ...files]
+        });
     };
 
-    const removeDocument = (id) => {
-        setUserData(prev => ({
-            ...prev,
-            documents: (prev.documents || []).filter(doc => doc.id !== id)
-        }));
+
+    const removeDocument = (index) => {
+        setUserData({
+            ...userData,
+            documents: documents.filter((_, i) => i !== index)
+        });
     };
+
 
     return (
         <div className="flex flx-col gap-6 animate-fadIn">
@@ -45,13 +39,13 @@ const UploadStep = () => {
                     Cliquez pour ajouter des documents
                 </p>
                 <p className="text-sm text-gray-500">
-                    PDF, JPG, PNG (plusieurs fichiers autorisés)
+                    PDF, TXT
                 </p>
 
                 <input
                     type="file"
                     multiple
-                    accept=".pdf,.jpg,.jpeg,.png"
+                    accept=".pdf,.txt, .doc, .docx"
                     onChange={handleFileUpload}
                     className="hidden"
                 />
@@ -66,28 +60,26 @@ const UploadStep = () => {
                     </p>
 
                     <ul className="space-y-2">
-                        {documents.map(doc => (
+                        {documents.map((file, index) => (
                             <li
-                                key={doc.id}
+                                key={index}
                                 className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm"
                             >
                                 <div className="flex items-center gap-3">
-                                    <FileText className="text-indigo-500" />
-                                    <div>
-                                        <p className="text-sm font-medium">
-                                            {doc.name}
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            {(doc.size / 1024).toFixed(1)} KB
-                                        </p>
-                                    </div>
+                                <FileText className="text-indigo-500" />
+                                <div>
+                                    <p className="text-sm font-medium">{file.name}</p>
+                                    <p className="text-xs text-gray-500">
+                                    {(file.size / 1024).toFixed(1)} KB
+                                    </p>
+                                </div>
                                 </div>
 
                                 <button
-                                    onClick={() => removeDocument(doc.id)}
-                                    className="text-red-500 hover:text-red-700"
+                                onClick={() => removeDocument(index)}
+                                className="text-red-500 hover:text-red-700"
                                 >
-                                    <Trash2 size={18} />
+                                <Trash2 size={18} />
                                 </button>
                             </li>
                         ))}

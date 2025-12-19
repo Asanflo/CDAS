@@ -4,10 +4,18 @@ import { StepperContext } from "../../context/stepperContext";
 const RequestTypeStep = () => {
     const {userData, setUserData} = useContext(StepperContext);
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setUserData({...userData, [name]:value});
+   const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setUserData({
+            ...userData,
+            procedure: {
+            ...userData.procedure,
+            [name]: value
+            }
+        });
     };
+
 
     return (
         <div className="flex flex-col">
@@ -18,8 +26,8 @@ const RequestTypeStep = () => {
                 </label>
 
                 <select
-                    name="requestType"
-                    value={userData.requestType || ""}
+                    name="type"
+                    value={userData.procedure.type}
                     onChange={handleChange}
                     className="
                         w-full rounded-lg border border-gray-300 bg-white p-3
@@ -41,8 +49,8 @@ const RequestTypeStep = () => {
                 </label>
 
                 <textarea
-                    name="motif"
-                    value={userData.motif || ""}
+                    name="motif_procedure"
+                    value={userData.procedure.motif_procedure}
                     onChange={handleChange}
                     rows={4}
                     placeholder="Ex : procédure de voyage, demande d’emploi, poursuite d’études…"
