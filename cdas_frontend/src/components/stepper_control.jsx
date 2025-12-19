@@ -3,7 +3,7 @@ const StepperControl = ({ handleClick, handleSubmit, currentStep, steps }) => {
   const isLastStep = currentStep === steps.length;
 
   return (
-    <div className="container flex justify-around mt-4 mb-8">
+    <div className="container flex justify-around mt-2 mb-2">
 
       {/* Bouton précédent */}
       <button

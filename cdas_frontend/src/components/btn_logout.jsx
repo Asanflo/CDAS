@@ -17,8 +17,8 @@ const BtnDeconnexion = () => {
         <button
             onClick={handleLogout}
             className="
-                bg-red-500 text-white font-bold py-2 px-4 
-                rounded-lg hover:bg-red-400 transition duration-300
+                bg-amber-500 text-white font-bold py-2 px-4 
+                rounded-lg hover:bg-indigo-700 transition duration-300
                 shadow-md flex items-center space-x-2
             "
         >
