@@ -5,17 +5,14 @@ import { CheckCircle } from "lucide-react";
 const FinalStep = () => {
   const { userData } = useContext(StepperContext);
 
-//   const documentsCount = userData.documents?.length || 0;
-//   const payment = userData.paiement || {};
-
   return (
-    <div className="flex flex-col gap-6 animate-fadeIn">
+    <div className="flex flex-col gap-3 animate-fadeIn">
 
       <h3 className="text-lg font-semibold text-gray-800">
         Récapitulatif de la demande
       </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 
         <Section title="Procédure">
           <p>Type : <b>{userData.procedure.type || "-"}</b></p>
@@ -41,7 +38,7 @@ const FinalStep = () => {
 
       </div>
 
-      <div className="flex items-center gap-2 text-green-600 font-semibold">
+      <div className="flex items-center gap-2 text-green-700 font-semibold">
         <CheckCircle />
         Toutes les informations sont prêtes à être soumises
       </div>

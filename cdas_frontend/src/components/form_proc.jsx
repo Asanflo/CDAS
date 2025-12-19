@@ -87,6 +87,9 @@ const FormProcedure = ( {closeModal} ) => {
        
         try {
             await initialiserProcedure(userData);
+
+            alert("Votre requête a été soumise, Nous vous ferons signe de la progression de votre dossier ulterieurement. ")
+            
             closeModal();
         } catch (error) {
             console.error("Erreur lors de l'envoi de la procédure :", error.response?.data || error.message);
@@ -101,15 +104,15 @@ const FormProcedure = ( {closeModal} ) => {
                 {/* Bouton fermer */}
                 <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-gray-600 hover:text-black"
+                className="absolute top-4 right-4 text-gray-600 hover:text-black cursor-pointer"
                 >
                 <X size={24} />
                 </button>
 
-                <h2 className="text-2xl font-bold mb-6">Nouvelle Procédure</h2>
+                <h2 className="text-2xl font-bold mb-2">Nouvelle Procédure</h2>
 
                 {/* stepper */}
-                <div className="mt-6 mb-10 px-4 ">
+                <div className="mt-4 mb-6 px-4 ">
                     <Stepper
                         steps = {Steps}
                         currentStep = {currentStep}
@@ -130,7 +133,7 @@ const FormProcedure = ( {closeModal} ) => {
                 </div>
 
                 {/* controle de navigation */}
-                <div className="mt-6 px-4">
+                <div className="mt-2 px-2">
                     <StepperControl
                         handleClick = {handleClick}
                         handleSubmit = {handleSubmit}

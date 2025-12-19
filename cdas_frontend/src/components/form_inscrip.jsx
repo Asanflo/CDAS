@@ -62,9 +62,9 @@ export default function Register() {
     console.log("Créer le compte avec Google");
   };
 
-  const signUpWithYahoo = () => {
-    console.log("Créer le compte avec Yahoo");
-  };
+  // const signUpWithYahoo = () => {
+  //   console.log("Créer le compte avec Yahoo");
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-50 from-gray-100 via-gray-200 to-gray-300 p-4">
@@ -89,7 +89,7 @@ export default function Register() {
             Continuer avec Google
           </button>
 
-          <button
+          {/* <button
             onClick={signUpWithYahoo}
             className="w-full flex items-center justify-center gap-3 py-2 border border-gray-300 rounded-xl bg-white hover:bg-gray-100 transition font-medium"
           >
@@ -99,7 +99,7 @@ export default function Register() {
               className="w-5 h-5"
             />
             Continuer avec Yahoo
-          </button>
+          </button> */}
         </div>
 
         {/* Séparateur */}
